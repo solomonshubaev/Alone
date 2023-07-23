@@ -7,12 +7,16 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MovementDetailsSO movementDetails;
 
     private Player player;
-    private float moveSpeed;
+    private float walkingSpeed;
+    private float runningSpeed;
+    private bool isRunning = false;
 
     private void Awake()
     {
         this.player = GetComponent<Player>();
-        this.moveSpeed = this.movementDetails.moveSpeed;
+        this.walkingSpeed = this.movementDetails.walkingSpeed;
+        this.runningSpeed = this.movementDetails.runningSpeed;
+        this.isRunning = false;
     }
 
     private void Update()
@@ -24,6 +28,8 @@ public class PlayerControl : MonoBehaviour
     {
         float horizontalMovement = Input.GetAxisRaw(InputEnum.Horizontal.ToString());
         float verticalMovement = Input.GetAxisRaw(InputEnum.Vertical.ToString());
+        this.isRunning = Input.GetKey(KeyCode.LeftShift);
+        float moveSpeed = this.walkingSpeed;
         Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
 
         // Adjust distance for diagonal movement (pythagoras approximation)
@@ -32,9 +38,15 @@ public class PlayerControl : MonoBehaviour
             direction *= 0.7f;
         }
 
+        if(this.isRunning)
+        {
+            moveSpeed = this.runningSpeed;
+            // Decrease stamina
+        }
+
         if (this.IsThereMovement(direction))
         {
-            this.player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, this.moveSpeed);
+            this.player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
         }
         else
         {

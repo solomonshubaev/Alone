@@ -5,13 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MovementDetails_", menuName = "Scriptable Objects/Movement/MovementDetails")]
 public class MovementDetailsSO : ScriptableObject
 {
-    public float moveSpeed = 8f;
+    public float walkingSpeed = 5f;
+    public float runningSpeed = 8f;
 
     private void OnValidate()
     {
-        if (moveSpeed <= 0)
+        if (this.walkingSpeed <= 0)
         {
-            Debug.LogWarning("moveSpeed has to be positive, current value: " + moveSpeed);
+            Debug.LogWarning("walkingSpeed has to be positive, current value: " + this.walkingSpeed);
+        }
+        if (this.runningSpeed <= 0)
+        {
+            Debug.LogWarning("runningSpeed has to be positive, current value: " + this.runningSpeed);
         }
     }
 }
