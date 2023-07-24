@@ -44,4 +44,9 @@ public class HelperUtilities
 
         return aimDirection;
     }
+
+    public static float CalculatePercent(float maxValue, float currentValue)
+    {
+        return currentValue * 100.0f / maxValue;
+    }
 }
