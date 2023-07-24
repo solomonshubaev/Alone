@@ -80,4 +80,14 @@ public class HelperUtilitiesTest
         Assert.AreEqual(AimDirection.Down, aimDirection);
     }
     #endregion
+
+    #region CalculatePercent
+    [Test]
+    public void CalculatePercentTest()
+    {
+        float maxValue = 1600f;
+        float currentValue = 800f;
+        Assert.AreEqual(50.0f, HelperUtilities.CalculatePercent(maxValue, currentValue));
+    }
+    #endregion
 }

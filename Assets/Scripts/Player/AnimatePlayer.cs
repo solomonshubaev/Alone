@@ -45,7 +45,6 @@ public class AnimatePlayer : MonoBehaviour
 
     private void SetMovementAnimationParameters(Vector2 moveDirection)
     {
-        Debug.Log(string.Format("Movement Animation. Horizontal: {0}, Vertical: {1}", moveDirection.x, moveDirection.y));
         if(moveDirection.x > 0 && moveDirection.y == 0)
         {
             this.SetLookDirection(LookDirection.Right);

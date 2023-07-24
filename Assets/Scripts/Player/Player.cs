@@ -16,14 +16,20 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementByVelocity))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(PlayerControl))]
+[RequireComponent(typeof(InformationUiEvent))]
 #endregion
 public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerDetailsSO playerDetails;
+    [SerializeField] public PlayerInformationSO playerInformation;
     [HideInInspector] public SpriteRenderer spriteRendrer;
     [HideInInspector] public Animator animator;
     [HideInInspector] public IdleEvent idleEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
+    private InformationUiEvent informationUiEvent;
+
+    [HideInInspector] public int hunger;
+    [HideInInspector] public float stamina;
 
     public void Awake()
     {
@@ -31,6 +37,19 @@ public class Player : MonoBehaviour
         this.animator = GetComponent<Animator>();
         this.idleEvent = GetComponent<IdleEvent>();
         this.movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+        this.informationUiEvent = GetComponent<InformationUiEvent>();
+    }
+
+    private void Start()
+    {
+        this.hunger = this.playerInformation.maxHunger;
+        this.stamina = this.playerInformation.maxStamina;
+    }
+
+    private void Update() // will it be critical who will execute first? playerControl or player?
+    {
+        this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxHunger, this.hunger),
+            HelperUtilities.CalculatePercent(this.playerInformation.maxStamina, this.stamina));
     }
 
     private void Initialize(PlayerDetailsSO playerDetails)
