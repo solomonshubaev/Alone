@@ -43,6 +43,8 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && this.player.stamina > 0 && this.IsThereMovement(direction)) // running
         {
             this.isRunning = true;
+            moveSpeed = this.runningSpeed;
+            this.player.stamina = Mathf.Max(this.player.stamina - Time.deltaTime, 0); // duplicate logic
         }
         else // walking
         {
@@ -53,18 +55,13 @@ public class PlayerControl : MonoBehaviour
                 Debug.Log("Player switched from running to walking");
             }
             this.isRunning = false;
-        }
 
-        if(this.isRunning)
-        {
-            moveSpeed = this.runningSpeed;
-            this.player.stamina = Mathf.Max(this.player.stamina - Time.deltaTime, 0); // duplicate logic
-        }
-        else if(this.player.stamina < this.player.playerInformation.maxStamina)
-        {
-            if(Time.time - this.lastTimeRan > this.player.playerInformation.recoverCoolDown)
+            if (this.player.stamina < this.player.playerInformation.maxStamina)
             {
-                this.player.stamina = Mathf.Min(this.player.stamina + Time.deltaTime, this.player.playerInformation.maxStamina); // duplicate logic
+                if (Time.time - this.lastTimeRan > this.player.playerInformation.recoverCoolDown)
+                {
+                    this.player.stamina = Mathf.Min(this.player.stamina + Time.deltaTime, this.player.playerInformation.maxStamina); // duplicate logic
+                }
             }
         }
 
