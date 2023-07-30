@@ -10,5 +10,6 @@ public static class Settings
     public static int lookDown = Animator.StringToHash("lookDown");
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isWalking = Animator.StringToHash("isWalking");
+    public static int isRunning = Animator.StringToHash("isRunning");
     #endregion
 }

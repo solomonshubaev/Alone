@@ -29,7 +29,7 @@ public class AnimatePlayer : MonoBehaviour
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent movementByVelocityEvent,
         MovementByVelocityArgs movementByVelocityArgs)
     {
-        this.SetMovementAnimationParameters(movementByVelocityArgs.moveDirection);
+        this.SetMovementAnimationParameters(movementByVelocityArgs.moveDirection, movementByVelocityArgs.isRunning);
     }
 
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
@@ -40,10 +40,11 @@ public class AnimatePlayer : MonoBehaviour
     private void SetIdleAnimationParameters()
     {
         this.player.animator.SetBool(Settings.isWalking, false);
+        this.player.animator.SetBool(Settings.isRunning, false);
         this.player.animator.SetBool(Settings.isIdle, true);
     }
 
-    private void SetMovementAnimationParameters(Vector2 moveDirection)
+    private void SetMovementAnimationParameters(Vector2 moveDirection, bool isRunning)
     {
         if(moveDirection.x > 0 && moveDirection.y == 0)
         {
@@ -61,8 +62,9 @@ public class AnimatePlayer : MonoBehaviour
         {
             this.SetLookDirection(LookDirection.Down);
         }
-        this.player.animator.SetBool(Settings.isWalking, true);
         this.player.animator.SetBool(Settings.isIdle, false);
+        this.player.animator.SetBool(Settings.isRunning, isRunning);
+        this.player.animator.SetBool(Settings.isWalking, !isRunning);
     }
 
     private void SetLookDirection(LookDirection lookDirection)

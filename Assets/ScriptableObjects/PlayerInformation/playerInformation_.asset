@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: playerInformation_
   m_EditorClassIdentifier: 
   maxHunger: 100
-  maxStamina: 1000
+  maxStamina: 5
   recoverCoolDown: 3
