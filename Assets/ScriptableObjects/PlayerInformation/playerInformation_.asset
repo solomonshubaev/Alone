@@ -13,9 +13,5 @@ MonoBehaviour:
   m_Name: playerInformation_
   m_EditorClassIdentifier: 
   maxHunger: 100
-<<<<<<< HEAD
   maxStamina: 5
-=======
-  maxStamina: 1000
->>>>>>> e11af48daa1dc416857b3b2c80475ef048810e7a
   recoverCoolDown: 3
