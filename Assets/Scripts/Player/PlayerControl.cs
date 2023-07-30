@@ -67,7 +67,11 @@ public class PlayerControl : MonoBehaviour
 
         if (this.IsThereMovement(direction))
         {
+<<<<<<< HEAD
             this.player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed, isRunning);
+=======
+            this.player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+>>>>>>> e11af48daa1dc416857b3b2c80475ef048810e7a
         }
         else
         {
