@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697be4d6a319f6749b15492dfce1add6, type: 3}
   m_Name: playerInformation_
   m_EditorClassIdentifier: 
-  maxHunger: 100
+  maxHunger: 200
   maxStamina: 5
   recoverCoolDown: 3
