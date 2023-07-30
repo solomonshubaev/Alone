@@ -263,11 +263,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9007232610494180074, guid: 269b4b30c0146fd4481ad137fd882e8e, type: 3}
       propertyPath: hunger
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9007232610494180074, guid: 269b4b30c0146fd4481ad137fd882e8e, type: 3}
       propertyPath: stamina
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9007232610494180074, guid: 269b4b30c0146fd4481ad137fd882e8e, type: 3}
       propertyPath: m_Enabled
