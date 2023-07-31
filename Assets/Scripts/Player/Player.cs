@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     private InformationUiEvent informationUiEvent;
 
-    [HideInInspector] public int hunger;
+    [HideInInspector] public float hunger;
     [HideInInspector] public float stamina;
 
     public void Awake()
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
     private void Update() // will it be critical who will execute first? playerControl or player?
     {
+        this.updateHunger();
         this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxHunger, this.hunger),
             HelperUtilities.CalculatePercent(this.playerInformation.maxStamina, this.stamina));
     }
@@ -55,5 +56,10 @@ public class Player : MonoBehaviour
     private void Initialize(PlayerDetailsSO playerDetails)
     {
         this.playerDetails = playerDetails;
+    }
+
+    private void updateHunger()
+    {
+        this.hunger -= Time.deltaTime;
     }
 }
