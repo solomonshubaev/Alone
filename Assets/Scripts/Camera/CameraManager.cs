@@ -4,7 +4,7 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Camera))]
-public class PlayerCamera : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [HideInInspector] private Camera camera;
     [SerializeField] private int screenWidth = 1600;
