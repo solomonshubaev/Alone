@@ -1,5 +1,6 @@
 public enum TagsEnum
 {
     Transparent,
-    Player
+    Player,
+    FruitBush
 }

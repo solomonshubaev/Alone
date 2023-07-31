@@ -27,6 +27,11 @@ public class PlayerControl : MonoBehaviour
         this.MovementInput();
     }
 
+    private void InteractSystem()
+    {
+        
+    }
+
     private void MovementInput()
     {
         float horizontalMovement = Input.GetAxisRaw(InputEnum.Horizontal.ToString());

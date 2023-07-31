@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Transparent
+  - FruitBush
   layers:
   - Default
   - TransparentFX
