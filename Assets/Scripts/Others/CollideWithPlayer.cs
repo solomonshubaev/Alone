@@ -51,7 +51,6 @@ public class CollideWithPlayer : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         string tag = collision.transform.tag;
-        Debug.Log("Exit Trigger with Player");
         if (tag == TagsEnum.Player.ToString())
         {
             Debug.Log("Exit Trigger with Player");

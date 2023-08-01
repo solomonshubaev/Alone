@@ -6,13 +6,6 @@ using Moq;
 
 public class HelperUtilitiesTest
 {
-    // A Test behaves as an ordinary method
-    [Test]
-    public void Test()
-    {
-        Assert.AreEqual(0, 0);
-    }
-
     #region GetAngleFromVector
     [Test]
     public void GetAngleFromVector_Up()
@@ -39,48 +32,6 @@ public class HelperUtilitiesTest
     }
     #endregion
 
-    #region GetAimDirection
-    [Test]
-    public void GetAimDirection_Up()
-    {
-        float angleDegrees = 90f;
-        AimDirection aimDirection = HelperUtilities.GetAimDirection(angleDegrees);
-        Assert.AreEqual(AimDirection.Up, aimDirection);
-    }
-
-    [Test]
-    public void GetAimDirection_Left_Positive()
-    {
-        float angleDegrees = 170f;
-        AimDirection aimDirection = HelperUtilities.GetAimDirection(angleDegrees);
-        Assert.AreEqual(AimDirection.Side, aimDirection);
-    }
-
-    [Test]
-    public void GetAimDirection_Left_Negative()
-    {
-        float angleDegrees = -170f;
-        AimDirection aimDirection = HelperUtilities.GetAimDirection(angleDegrees);
-        Assert.AreEqual(AimDirection.Side, aimDirection);
-    }
-
-    [Test]
-    public void GetAimDirection_Right()
-    {
-        float angleDegrees = 30f;
-        AimDirection aimDirection = HelperUtilities.GetAimDirection(angleDegrees);
-        Assert.AreEqual(AimDirection.Side, aimDirection);
-    }
-
-    [Test]
-    public void GetAimDirection_Down()
-    {
-        float angleDegrees = -90f;
-        AimDirection aimDirection = HelperUtilities.GetAimDirection(angleDegrees);
-        Assert.AreEqual(AimDirection.Down, aimDirection);
-    }
-    #endregion
-
     #region CalculatePercent
     [Test]
     public void CalculatePercentTest()
@@ -88,6 +39,33 @@ public class HelperUtilitiesTest
         float maxValue = 1600f;
         float currentValue = 800f;
         Assert.AreEqual(50.0f, HelperUtilities.CalculatePercent(maxValue, currentValue));
+    }
+    #endregion
+
+    #region GetLookDirection
+    [Test]
+    public void CalculateLookingDirection_Right()
+    {
+        Vector2 vector = new Vector2(1, 0);
+        Assert.AreEqual(LookDirection.Right, HelperUtilities.GetLookDirection(vector));
+    }
+    [Test]
+    public void CalculateLookingDirection_Left()
+    {
+        Vector2 vector = new Vector2(-1, 0);
+        Assert.AreEqual(LookDirection.Left, HelperUtilities.GetLookDirection(vector));
+    }
+    [Test]
+    public void CalculateLookingDirection_Up()
+    {
+        Vector2 vector = new Vector2(0, 1);
+        Assert.AreEqual(LookDirection.Up, HelperUtilities.GetLookDirection(vector));
+    }
+    [Test]
+    public void CalculateLookingDirection_Down()
+    {
+        Vector2 vector = new Vector2(0, -1);
+        Assert.AreEqual(LookDirection.Down, HelperUtilities.GetLookDirection(vector));
     }
     #endregion
 }

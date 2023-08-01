@@ -11,6 +11,7 @@ public class PlayerInformationSO : ScriptableObject
 
     public int maxStamina = 5;
 
+    [Tooltip("How long will take to stamina to START recover")]
     public float recoverCoolDown = 3f;
 
     private void OnValidate()

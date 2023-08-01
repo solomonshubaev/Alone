@@ -6,16 +6,11 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
 
-    [SerializeField] private PlayerDetailsSO playerDetails;
-
-
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         // for testing will be removed
@@ -31,7 +26,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperValidations.ValidateNotNull(this.playerDetails, nameof(this.playerDetails));
+
     }
 #endif
     #endregion

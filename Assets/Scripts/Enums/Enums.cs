@@ -1,10 +1,3 @@
-public enum AimDirection
-{
-    Up,
-    Side,
-    Down
-}
-
 public enum LookDirection
 {
     Up,

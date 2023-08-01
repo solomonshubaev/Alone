@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class HelperUtilities
@@ -29,24 +30,31 @@ public class HelperUtilities
         return degrees;
     }
 
-    public static AimDirection GetAimDirection(float angleDegrees)
-    {
-        AimDirection aimDirection;
-
-        if (angleDegrees < 45 && angleDegrees >= -45)
-            aimDirection = AimDirection.Side; //right
-        else if (angleDegrees < -45 && angleDegrees >= -135)
-            aimDirection = AimDirection.Down;
-        else if ((angleDegrees < -135 && angleDegrees >= -180) || (angleDegrees >= 135 && angleDegrees <= 180)) //wrong
-            aimDirection = AimDirection.Side; //left
-        else // 45 =< angleDegrees < 135
-            aimDirection = AimDirection.Up;
-
-        return aimDirection;
-    }
 
     public static float CalculatePercent(float maxValue, float currentValue)
     {
         return currentValue * 100.0f / maxValue;
+    }
+
+    public static LookDirection? GetLookDirection(Vector2 moveDirection)
+    {
+        if (moveDirection.x > 0 && moveDirection.y == 0)
+        {
+            return LookDirection.Right;
+        }
+        else if (moveDirection.x < 0 && moveDirection.y == 0)
+        {
+            return LookDirection.Left;
+        }
+        else if (moveDirection.y > 0 && moveDirection.x == 0)
+        {
+            return LookDirection.Up;
+        }
+        else if (moveDirection.y < 0 && moveDirection.x == 0)
+        {
+            return LookDirection.Down;
+        }
+
+        return null;
     }
 }

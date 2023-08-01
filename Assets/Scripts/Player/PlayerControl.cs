@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     private float runningSpeed;
     private float lastTimeRan;
     private bool isRunning = false;
+    private GameObject interactableObject;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class PlayerControl : MonoBehaviour
         this.runningSpeed = this.movementDetails.runningSpeed;
         this.lastTimeRan = Time.time;
         this.isRunning = false;
+        this.interactableObject = null;
     }
 
     private void Update()
@@ -27,9 +29,51 @@ public class PlayerControl : MonoBehaviour
         this.MovementInput();
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag(TagsEnum.Interactable.ToString()))
+        {
+            this.CheckClosestInteractableObject(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag(TagsEnum.Interactable.ToString()))
+        {
+            if (collision.gameObject == this.interactableObject)
+            {
+                this.interactableObject = null;
+            }
+        }
+    }
+
     private void InteractSystem()
     {
-        
+        if (this.interactableObject != null)
+        {
+            Debug.Log("Trying to interact with: " + this.interactableObject.name);
+            InteractableAbstract interactableObject = this.interactableObject.GetComponent<InteractableAbstract>();
+            HelperValidations.ValidateNotNull(interactableObject, nameof(interactableObject));
+            interactableObject.InteractWithPlayer();
+        }
+    }
+
+    private void CheckClosestInteractableObject(GameObject newInteractableObject)
+    {
+        if (this.interactableObject == null)
+        {
+            Debug.Log("Set new interactableObject");
+            this.interactableObject = newInteractableObject;
+            return;
+        }
+
+        if (Vector2.Distance(this.transform.position, this.interactableObject.transform.position)
+            > Vector2.Distance(this.transform.position, newInteractableObject.transform.position))
+        {
+            this.interactableObject = newInteractableObject;
+            return;
+        }
     }
 
     private void MovementInput()
@@ -78,12 +122,18 @@ public class PlayerControl : MonoBehaviour
         {
             this.player.idleEvent.CallIdleEvent();
         }
+
+        if (Input.GetKeyDown(KeyCode.E) && !this.isRunning)
+        {
+            this.InteractSystem();
+        }
     }
 
     private bool IsThereMovement(Vector2 direction)
     {
         return direction != Vector2.zero;
     }
+
 
     #region VALIDATION
 #if UNITY_EDITOR
