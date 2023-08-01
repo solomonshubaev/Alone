@@ -46,22 +46,9 @@ public class AnimatePlayer : MonoBehaviour
 
     private void SetMovementAnimationParameters(Vector2 moveDirection, bool isRunning)
     {
-        if(moveDirection.x > 0 && moveDirection.y == 0)
-        {
-            this.SetLookDirection(LookDirection.Right);
-        }
-        else if(moveDirection.x < 0 && moveDirection.y == 0)
-        {
-            this.SetLookDirection(LookDirection.Left);
-        }
-        else if(moveDirection.y > 0 && moveDirection.x == 0)
-        {
-            this.SetLookDirection(LookDirection.Up);
-        }
-        else if(moveDirection.y < 0 && moveDirection.x == 0)
-        {
-            this.SetLookDirection(LookDirection.Down);
-        }
+        LookDirection? lookDirection = HelperUtilities.GetLookDirection(moveDirection);
+        if (lookDirection != null)
+            this.SetLookDirection((LookDirection)lookDirection);
         this.player.animator.SetBool(Settings.isIdle, false);
         this.player.animator.SetBool(Settings.isRunning, isRunning);
         this.player.animator.SetBool(Settings.isWalking, !isRunning);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
 
@@ -18,8 +19,10 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(PlayerControl))]
 [RequireComponent(typeof(InformationUiEvent))]
 #endregion
-public class Player : MonoBehaviour
+public class Player : SingletonMonobehaviour<Player>
 {
+    [SerializeField] private Transform interactionCollidersParent;
+    [SerializeField] private LookDirection currentInteractionDirection;
     [HideInInspector] public PlayerDetailsSO playerDetails;
     [SerializeField] public PlayerInformationSO playerInformation;
     [HideInInspector] public SpriteRenderer spriteRendrer;
@@ -28,16 +31,31 @@ public class Player : MonoBehaviour
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     private InformationUiEvent informationUiEvent;
 
-    [HideInInspector] public float hunger;
+    [SerializeField] public float hunger;
     [HideInInspector] public float stamina;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         this.spriteRendrer = GetComponent<SpriteRenderer>();
         this.animator = GetComponent<Animator>();
         this.idleEvent = GetComponent<IdleEvent>();
         this.movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         this.informationUiEvent = GetComponent<InformationUiEvent>();
+        this.interactionCollidersParent = transform.Find("InteractionColliders");
+        this.currentInteractionDirection = LookDirection.Down;
+        this.SetInteractionDirectionActive(this.currentInteractionDirection);
+    }
+
+    private void OnEnable()
+    {
+        //Todo: Check race condition, if player not inited so it will be null, enforced it by project's settings (execution order).
+        this.movementByVelocityEvent.onMovementByVelocity += MovementByVelocityEvent_SetInteractionToDirection;
+    }
+
+    private void OnDisable()
+    {
+        this.movementByVelocityEvent.onMovementByVelocity -= MovementByVelocityEvent_SetInteractionToDirection;
     }
 
     private void Start()
@@ -48,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void Update() // will it be critical who will execute first? playerControl or player?
     {
-        this.updateHunger();
+        this.UpdateHunger();
         this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxHunger, this.hunger),
             HelperUtilities.CalculatePercent(this.playerInformation.maxStamina, this.stamina));
     }
@@ -58,8 +76,40 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
     }
 
-    private void updateHunger()
+    private void UpdateHunger()
     {
         this.hunger -= Time.deltaTime;
+    }
+
+    public void IncreaseHungerBy(float value)
+    {
+        this.hunger = Mathf.Clamp(this.hunger + value, 0, this.playerInformation.maxHunger);
+    }
+
+
+    public void MovementByVelocityEvent_SetInteractionToDirection(MovementByVelocityEvent movementByVelocityEvent,
+        MovementByVelocityArgs movementByVelocityArgs)
+    {
+        LookDirection? nullableLookDirection = HelperUtilities.GetLookDirection(movementByVelocityArgs.moveDirection);
+        if (nullableLookDirection != null)
+        {
+            LookDirection lookDirection = (LookDirection)nullableLookDirection;
+            this.SetInteractionDirectionActive(lookDirection);
+        }
+    }
+
+    private void SetInteractionDirectionActive(LookDirection lookDirection)
+    {
+        if (this.WasLookingDirectionChanged(lookDirection))
+        {
+            this.interactionCollidersParent.Find(this.currentInteractionDirection.ToString()).gameObject.SetActive(false);
+            this.interactionCollidersParent.Find(lookDirection.ToString()).gameObject.SetActive(true);
+            this.currentInteractionDirection = lookDirection;
+        }
+    }
+
+    private bool WasLookingDirectionChanged(LookDirection newLookDirection)
+    {
+        return this.currentInteractionDirection != newLookDirection;
     }
 }

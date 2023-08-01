@@ -22,8 +22,8 @@ public abstract class SingletonMonobehaviour<T> : MonoBehaviour where T: MonoBeh
         }
         else
         {
+            Debug.Log("Singleton behavior deleted duplicated gameobject");
             Destroy(this.gameObject);
-            Debug.Log("Singleton behaviour deleted duplicated gameobject");
         }
     }
 }

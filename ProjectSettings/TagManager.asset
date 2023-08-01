@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Transparent
   - FruitBush
+  - Interactable
   layers:
   - Default
   - TransparentFX

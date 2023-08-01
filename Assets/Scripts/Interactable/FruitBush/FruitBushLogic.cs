@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class FruitBushLogic : MonoBehaviour
+public class FruitBushLogic : InteractableAbstract
 {
     [SerializeField] private FruitBushSO fruitBushSO;
     [SerializeField] private bool hasFruits;
     [SerializeField] private GameObject fruitGameObject;
-
     private float lastTimeHadFruits;
+
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
@@ -28,13 +32,24 @@ public class FruitBushLogic : MonoBehaviour
         }
     }
 
+    public override void InteractWithPlayer()
+    {
+        if (this.hasFruits)
+        {
+            this.hasFruits = false;
+            this.lastTimeHadFruits = Time.time;
+            this.fruitGameObject.SetActive(false);
+            Player.Instance.IncreaseHungerBy((float)this.fruitBushSO.hungerGain);
+        }
+    }
+
     private void OnValidate()
     {
         HelperValidations.ValidateNotNull(this.fruitGameObject, nameof(this.fruitGameObject));
-        if (this.transform.tag != TagsEnum.FruitBush.ToString())
+        if (this.transform.tag != TagsEnum.Interactable.ToString())
         {
             Debug.LogWarning(string.Format("GameObject should be with tag: '{0}'",
-                TagsEnum.FruitBush.ToString()));
+                TagsEnum.Interactable.ToString()));
         }
     }
 }
