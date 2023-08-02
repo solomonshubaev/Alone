@@ -19,8 +19,6 @@ public class CollideWithPlayer : MonoBehaviour
     [SerializeField] private SortingGroup sortingGroup;
 
     private Transform parentTransform;
-    private readonly int infrontOfPlayer = 1;
-    private readonly int behindOfPlayer = -1;
 
     private void Awake()
     {
@@ -37,7 +35,7 @@ public class CollideWithPlayer : MonoBehaviour
         if (tag == TagsEnum.Player.ToString())
         {
             Debug.Log("Trigger with Player");
-            this.sortingGroup.sortingOrder = this.infrontOfPlayer;
+            this.sortingGroup.sortingLayerName = SortingLayerEnum.InfrontPlayer.ToString();
             if (this.isTransparent)
             {
                 foreach(SpriteRenderer spriteRenderer in this.spriteRenderers)
@@ -54,7 +52,7 @@ public class CollideWithPlayer : MonoBehaviour
         if (tag == TagsEnum.Player.ToString())
         {
             Debug.Log("Exit Trigger with Player");
-            this.sortingGroup.sortingOrder = this.behindOfPlayer;
+            this.sortingGroup.sortingLayerName = SortingLayerEnum.BehindPlayer.ToString();
             if (this.isTransparent)
             {
                 foreach (SpriteRenderer spriteRenderer in this.spriteRenderers)
