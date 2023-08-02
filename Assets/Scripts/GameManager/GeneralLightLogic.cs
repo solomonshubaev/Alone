@@ -13,7 +13,7 @@ public class GeneralLightLogic : MonoBehaviour
     private Light2D generalLight;
     private GeneralLightEvent generalLightEvent;
 
-    private float lastTimeADayStarted;
+    private float lastTimeAPeriodStarted;
     private float timeForATimePeriod;
     private int currentPeriodNumber;
     private int midFullDayPeriodNumber;
@@ -33,16 +33,16 @@ public class GeneralLightLogic : MonoBehaviour
     {
         this.midFullDayPeriodNumber = (int)this.aFullDayDifferentPeriods / 2;
         this.timeForATimePeriod = this.aFullDayLength / aFullDayDifferentPeriods;
-        this.lastTimeADayStarted = Time.time;
+        this.lastTimeAPeriodStarted = Time.time;
         this.currentPeriodNumber = 1;
     }
 
     void Update()
     {
-        if(Time.time >= this.lastTimeADayStarted + (this.currentPeriodNumber * this.timeForATimePeriod))
+        if(Time.time >= this.lastTimeAPeriodStarted + this.timeForATimePeriod)
         {
             this.currentPeriodNumber++;
-            Debug.Log("Changing period time to: " + this.currentPeriodNumber);
+            Debug.Log("Changing period number to: " + this.currentPeriodNumber);
             if(this.currentPeriodNumber <= this.midFullDayPeriodNumber)
             {
                 this.generalLight.intensity -= this.lightIntensityChangeForPeriod;
@@ -51,6 +51,7 @@ public class GeneralLightLogic : MonoBehaviour
             {
                 this.generalLight.intensity += this.lightIntensityChangeForPeriod;
             }
+            this.lastTimeAPeriodStarted = Time.time;
             this.generalLightEvent.UpdateDayTimeEvent(this.generalLight.intensity);
             this.ValidateLightIntensityRealTime(this.generalLight.intensity);
             if(this.currentPeriodNumber == this.aFullDayDifferentPeriods)
@@ -63,7 +64,6 @@ public class GeneralLightLogic : MonoBehaviour
     private void SetNewDay()
     {
         this.currentPeriodNumber = 1;
-        this.lastTimeADayStarted = Time.time;
     }
 
     private void ValidateLightIntensityRealTime(float generalLightIntensity)
