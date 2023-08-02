@@ -6,14 +6,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class GeneralLightEvent : MonoBehaviour
 {
-    public event Action<GeneralLightEvent, GeneralLightArgs> updateDayTime;
+    public event Action<GeneralLightEvent, GeneralLightArgs> updateLightIntensity;
 
-    public void UpdateDayTimeEvent(float lightIntensity)
+    public void UpdateLightIntensityEvent(float lightIntensity)
     {
-        updateDayTime?.Invoke(this, new GeneralLightArgs()
+        updateLightIntensity?.Invoke(this, new GeneralLightArgs()
         {
             lightIntensity = lightIntensity
-        }); ;
+        });
     }
 
 }

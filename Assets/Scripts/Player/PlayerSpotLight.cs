@@ -20,12 +20,12 @@ public class PlayerSpotLight : MonoBehaviour
 
     private void OnEnable()
     {
-        this.generalLightEvent.updateDayTime += GeneralLightEvent_ConfigPlayerLight;
+        this.generalLightEvent.updateLightIntensity += GeneralLightEvent_ConfigPlayerLight;
     }
 
     private void OnDisable()
     {
-        this.generalLightEvent.updateDayTime -= GeneralLightEvent_ConfigPlayerLight;
+        this.generalLightEvent.updateLightIntensity -= GeneralLightEvent_ConfigPlayerLight;
     }
 
     private void GeneralLightEvent_ConfigPlayerLight(GeneralLightEvent generalLightEvent,
