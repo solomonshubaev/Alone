@@ -50,8 +50,14 @@ TagManager:
   - name: Decorations
     uniqueID: 186897875
     locked: 0
+  - name: BehindPlayer
+    uniqueID: 2873721091
+    locked: 0
   - name: Player
     uniqueID: 3961866705
+    locked: 0
+  - name: InfrontPlayer
+    uniqueID: 2749114159
     locked: 0
   - name: Level1
     uniqueID: 700967795
