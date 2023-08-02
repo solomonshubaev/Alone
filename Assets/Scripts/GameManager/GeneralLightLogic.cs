@@ -19,7 +19,7 @@ public class GeneralLightLogic : MonoBehaviour
     private int midFullDayPeriodNumber;
 
     private readonly float maxGeneralLightIntensity = 1f;
-    private readonly float aFullDayLength = 0.12f * 60;
+    private readonly float aFullDayLength = 5f * 60;
     private readonly int aFullDayDifferentPeriods = 80;
     private readonly float lightIntensityChangeForPeriod = 0.025f;
 
