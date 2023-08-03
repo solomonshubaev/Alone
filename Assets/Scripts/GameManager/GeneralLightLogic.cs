@@ -12,61 +12,68 @@ public class GeneralLightLogic : MonoBehaviour
 {
     private Light2D generalLight;
     private GeneralLightEvent generalLightEvent;
+    [SerializeField] private GameManagerEvent gameManagerEvent;
 
-    private float lastTimeADayStarted;
-    private float timeForATimePeriod;
-    private int currentPeriodNumber;
-    private int midFullDayPeriodNumber;
-
-    private readonly float maxGeneralLightIntensity = 1f;
-    private readonly float aFullDayLength = 5f * 60;
-    private readonly int aFullDayDifferentPeriods = 80;
-    private readonly float lightIntensityChangeForPeriod = 0.025f;
 
     private void Awake()
     {
-        this.generalLightEvent = GetComponent<GeneralLightEvent>();
         this.generalLight = GetComponent<Light2D>();
+        this.generalLightEvent = GetComponent<GeneralLightEvent>();
     }
 
-    void Start()
+    private void OnEnable()
     {
-        this.midFullDayPeriodNumber = (int)this.aFullDayDifferentPeriods / 2;
-        this.timeForATimePeriod = this.aFullDayLength / aFullDayDifferentPeriods;
-        this.lastTimeADayStarted = Time.time;
-        this.currentPeriodNumber = 1;
+        this.gameManagerEvent.updateDayTime += GameManagerEvent_ConfigGeneralLight;
+        this.gameManagerEvent.passTime += GameManagerEvent_ChangeGeneralLightWhenTimePass;
     }
 
-    void Update()
+    private void OnDisable()
     {
-        if(Time.time >= this.lastTimeADayStarted + (this.currentPeriodNumber * this.timeForATimePeriod))
+        this.gameManagerEvent.updateDayTime -= GameManagerEvent_ConfigGeneralLight;
+        this.gameManagerEvent.passTime -= GameManagerEvent_ChangeGeneralLightWhenTimePass;
+    }
+
+    private void GameManagerEvent_ConfigGeneralLight(GameManagerEvent gameManagerEvent,
+        GameManagerArgs_UpdateDayTime gameManagerArgs)
+    {
+        if (gameManagerArgs.currentPeriodNumber <= gameManagerArgs.midFullDayPeriodNumber)
         {
-            this.currentPeriodNumber++;
-            Debug.Log("Changing period time to: " + this.currentPeriodNumber);
-            if(this.currentPeriodNumber <= this.midFullDayPeriodNumber)
-            {
-                this.generalLight.intensity -= this.lightIntensityChangeForPeriod;
-            }
-            else
-            {
-                this.generalLight.intensity += this.lightIntensityChangeForPeriod;
-            }
-            this.generalLightEvent.UpdateDayTimeEvent(this.generalLight.intensity);
-            this.ValidateLightIntensityRealTime(this.generalLight.intensity);
-            if(this.currentPeriodNumber == this.aFullDayDifferentPeriods)
-            {
-                this.SetNewDay();
-            }
+            this.generalLight.intensity -= gameManagerArgs.lightIntensityChangeForPeriod;
+        }
+        else
+        {
+            this.generalLight.intensity += gameManagerArgs.lightIntensityChangeForPeriod;
+        }
+        this.ValidateLightIntensityRealTime(gameManagerArgs.maxGeneralLightIntensity);
+        this.generalLightEvent.UpdateLightIntensityEvent(this.generalLight.intensity);
+    }
+
+    private void GameManagerEvent_ChangeGeneralLightWhenTimePass(GameManagerEvent gameManagerEvent,
+        GameManagerArgs_PassTime gameManagerArgs)
+    {
+        this.generalLight.intensity = this.CalculateNewLightIntensity(
+            gameManagerArgs.newPeriodNumber, gameManagerArgs.lightIntensityChangeForPeriod,
+            gameManagerArgs.midFullDayPeriodNumber);
+        this.ValidateLightIntensityRealTime(gameManagerArgs.maxGeneralLightIntensity);
+        this.generalLightEvent.UpdateLightIntensityEvent(this.generalLight.intensity);
+    }
+
+    private float CalculateNewLightIntensity(int newPeriod, float lightIntensityChangeForPeriod,
+        int midFullDayPeriodNumber)
+    {
+        if (newPeriod <= midFullDayPeriodNumber)
+        {
+            // if maximum light intensity is 1 !!!
+            return 1 - ((newPeriod - 1) * lightIntensityChangeForPeriod);
+        }
+        else
+        {
+            // if maximum light intensity is 1 !!!
+            return (newPeriod * lightIntensityChangeForPeriod) - 1;
         }
     }
 
-    private void SetNewDay()
-    {
-        this.currentPeriodNumber = 1;
-        this.lastTimeADayStarted = Time.time;
-    }
-
-    private void ValidateLightIntensityRealTime(float generalLightIntensity)
+    private void ValidateLightIntensityRealTime(float maxGeneralLightIntensity)
     {
         if (this.generalLight.intensity < 0f)
         {
@@ -75,26 +82,16 @@ public class GeneralLightLogic : MonoBehaviour
             this.generalLight.intensity = 0f;
         }
 
-        if (this.generalLight.intensity > this.maxGeneralLightIntensity)
+        if (this.generalLight.intensity > maxGeneralLightIntensity)
         {
             Debug.LogWarning("General light intensity is bigger than maxGeneralLightIntensity. " +
                 "Setting light to maxGeneralLightIntensity");
-            this.generalLight.intensity = this.maxGeneralLightIntensity;
+            this.generalLight.intensity = maxGeneralLightIntensity;
         }
     }
 
     private void OnValidate()
     {
-        Light2D generalLight = GetComponent<Light2D>();
-        if (generalLight.intensity > this.maxGeneralLightIntensity)
-        {
-            Debug.LogWarning(string.Format("Light intensity is {0} higher then max playerLightIntensity."
-                , generalLight.intensity));
-        }
 
-        if(this.aFullDayDifferentPeriods % 2 != 0)
-        {
-            Debug.LogWarning("aFullDayDifferentPeriods should be an even because we divide it by 2");
-        }
     }
 }

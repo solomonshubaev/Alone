@@ -999,6 +999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47da9b27b33fc54187e3d88f90ccf11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerEvent: {fileID: 1668906451}
 --- !u!1 &1245907881
 GameObject:
   m_ObjectHideFlags: 0
@@ -45841,6 +45842,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1668906451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918860282934789282, guid: 06b04f4ce3d083f478e333d4e649f406, type: 3}
+  m_PrefabInstance: {fileID: 5432536995180760593}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f079dc4ecac6e8549806b62563ecbf43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1721066506
 GameObject:
   m_ObjectHideFlags: 0
@@ -46397,6 +46409,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5432536995997141121, guid: 06b04f4ce3d083f478e333d4e649f406, type: 3}
+      propertyPath: generalLightEvent
+      value: 
+      objectReference: {fileID: 1229504631}
     - target: {fileID: 5432536995997141150, guid: 06b04f4ce3d083f478e333d4e649f406, type: 3}
       propertyPath: m_Name
       value: GameManager
