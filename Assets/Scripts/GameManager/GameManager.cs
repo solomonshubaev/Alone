@@ -20,7 +20,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private readonly float maxGeneralLightIntensity = 1f;
     private readonly float aFullDayLength = 5f * 60;
-    private readonly int aFullDayDifferentPeriods = 80;
+    private readonly int periodsPerADay = 80;
     #endregion
 
     private void Awake()
@@ -30,8 +30,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     void Start()
     {
-        this.midFullDayPeriodNumber = (int)this.aFullDayDifferentPeriods / 2;
-        this.timeForATimePeriod = this.aFullDayLength / aFullDayDifferentPeriods;
+        this.midFullDayPeriodNumber = (int)this.periodsPerADay / 2;
+        this.timeForATimePeriod = this.aFullDayLength / periodsPerADay;
         this.lastTimeAPeriodStarted = Time.time;
         this.currentPeriodNumber = 1;
         this.lightIntensityChangeForPeriod = this.maxGeneralLightIntensity / this.midFullDayPeriodNumber;
@@ -45,12 +45,30 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         this.UpdateDayNightCycle();
 
         // for testing, will be removed
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.PassTimeToPeriod(10); // test only
+        }
+
+        // for testing, will be removed
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
 
             Application.Quit();
         }
         
+    }
+
+    private void PassTimeToPeriod(int periodToPass)
+    {
+        int newPeriodNumber = this.currentPeriodNumber + periodToPass;
+        if (newPeriodNumber > this.periodsPerADay)
+            this.currentPeriodNumber = newPeriodNumber % this.periodsPerADay;
+        else
+            this.currentPeriodNumber = newPeriodNumber;
+        Debug.Log("New period number is: " + this.currentPeriodNumber);
+        this.lastTimeAPeriodStarted = Time.time;
+        this.gameManagerEvent.PassTimeEvent(newPeriodNumber, this.midFullDayPeriodNumber, this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
     }
 
     private void UpdateDayNightCycle()
@@ -62,7 +80,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             this.gameManagerEvent.UpdateDayTimeEvent(this.currentPeriodNumber, this.midFullDayPeriodNumber,
                 this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
             this.lastTimeAPeriodStarted = Time.time;
-            if (this.currentPeriodNumber == this.aFullDayDifferentPeriods)
+            if (this.currentPeriodNumber == this.periodsPerADay)
             {
                 this.SetNewDay();
             }
@@ -78,7 +96,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (this.aFullDayDifferentPeriods % 2 != 0)
+        if (this.periodsPerADay % 2 != 0)
         {
             Debug.LogWarning("aFullDayDifferentPeriods should be an even because we divide it by 2");
         }
