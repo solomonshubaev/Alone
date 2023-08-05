@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Light2D))]
-public class PlayerSpotLight : MonoBehaviour
+public class PlayerSpotLight : LightManagerAbstract
 {
     private Light2D playerLight;
     [SerializeField] private GeneralLightEvent generalLightEvent;
@@ -16,6 +17,11 @@ public class PlayerSpotLight : MonoBehaviour
     private void Awake()
     {
         this.playerLight = GetComponent<Light2D>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     private void OnEnable()
@@ -34,7 +40,13 @@ public class PlayerSpotLight : MonoBehaviour
         if(generalLightArgs.lightIntensity <= this.lightActivateThreshold)
         {
             this.playerLight.enabled = true;
-            this.playerLight.intensity = this.CalculatePlayerLightIntensity(generalLightArgs.lightIntensity);
+            if (this.canAccessLight)
+            {
+                this.playerLight.intensity = this.CalculatePlayerLightIntensity(generalLightArgs.lightIntensity);
+                Debug.Log("Light component is not locked");
+            }
+            else
+                Debug.Log("Light component is locked");
         }
         else
         {

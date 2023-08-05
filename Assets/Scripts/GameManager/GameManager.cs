@@ -23,8 +23,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private readonly int periodsPerADay = 80;
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         this.gameManagerEvent = GetComponent<GameManagerEvent>();
     }
 
@@ -76,7 +77,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (Time.time >= this.lastTimeAPeriodStarted + this.timeForATimePeriod)
         {
             this.currentPeriodNumber++;
-            Debug.Log("Changing period number to: " + this.currentPeriodNumber);
             this.gameManagerEvent.UpdateDayTimeEvent(this.currentPeriodNumber, this.midFullDayPeriodNumber,
                 this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
             this.lastTimeAPeriodStarted = Time.time;

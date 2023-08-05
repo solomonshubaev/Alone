@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a748d2f5bb00dcb4faa6005ea78c67cf, type: 3}
+  m_Name: playerFlashLight
+  m_EditorClassIdentifier: 
+  minLightIntensity: 0
+  maxLightIntensity: 1
+  numberOfFlickersInRow: 4
+  minTimeBetweenFlickersProcess: 4
+  maxTimeBetweenFlickersProcess: 6
+  minTimeMinIntensity: 0.01
+  maxTimeMinIntensity: 0.5
+  minTimeMaximumIntensity: 0.01
+  maxTimeMaximumIntensity: 0.5

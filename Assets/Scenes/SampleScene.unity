@@ -1842,6 +1842,7 @@ GameObject:
   - component: {fileID: 1286652695}
   - component: {fileID: 1286652696}
   - component: {fileID: 1286652697}
+  - component: {fileID: 1286652698}
   m_Layer: 6
   m_Name: SpotLight
   m_TagString: Untagged
@@ -1956,6 +1957,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generalLightEvent: {fileID: 1229504631}
+--- !u!114 &1286652698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286652694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c0cbe0e876a2b43a94a94d09b66d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightFlickeringSO: {fileID: 11400000, guid: 2b3bea17553ae3947937f9f152fd904d, type: 2}
 --- !u!1 &1360889881 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9221811569739568590, guid: 1bf4b4202554e8744bfb228af3a6638d, type: 3}
