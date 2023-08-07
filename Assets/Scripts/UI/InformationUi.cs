@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InformationUi : MonoBehaviour
 {
     [SerializeField] private InformationUiEvent informationUiEvent;
-    [SerializeField] private Image hungerBar;
+    [SerializeField] private Image vitalityBar;
     [SerializeField] private Image staminaBar;
 
     private void OnEnable()
@@ -22,13 +22,13 @@ public class InformationUi : MonoBehaviour
 
     private void InformationUiEvent_UpdateUI(InformationUiEvent informationUiEvent, InformationUiArgs informationUiArgs)
     {
-        this.UpdateHungerBar(informationUiArgs.hungerPercent);
+        this.UpdateVitalityBar(informationUiArgs.vitalityPercent);
         this.UpdateStaminaBar(informationUiArgs.staminaPercent);
     }
 
-    private void UpdateHungerBar(float percent)
+    private void UpdateVitalityBar(float percent)
     {
-        this.hungerBar.fillAmount = percent/100f;
+        this.vitalityBar.fillAmount = percent/100f;
     }
 
     private void UpdateStaminaBar(float percent)
@@ -39,7 +39,7 @@ public class InformationUi : MonoBehaviour
     private void OnValidate()
     {
         HelperValidations.ValidateNotNull(this.informationUiEvent, "informationUiEvent");
-        HelperValidations.ValidateNotNull(this.hungerBar, "hungerBar");
+        HelperValidations.ValidateNotNull(this.vitalityBar, "hungerBar");
         HelperValidations.ValidateNotNull(this.staminaBar, "staminaBar");
     }
 }

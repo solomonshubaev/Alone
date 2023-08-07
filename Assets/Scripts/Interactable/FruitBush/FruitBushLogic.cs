@@ -39,7 +39,7 @@ public class FruitBushLogic : InteractableAbstract
             this.hasFruits = false;
             this.lastTimeHadFruits = Time.time;
             this.fruitGameObject.SetActive(false);
-            Player.Instance.IncreaseHungerBy((float)this.fruitBushSO.hungerGain);
+            Player.Instance.IncreaseVitalityBy((float)this.fruitBushSO.vitalityGain);
         }
     }
 

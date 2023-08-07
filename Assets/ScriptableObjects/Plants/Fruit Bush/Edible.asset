@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d738352e7d7ab4245a8407fda50f40a5, type: 3}
   m_Name: Edible
   m_EditorClassIdentifier: 
-  hungerGain: 100
+  vitalityGain: 40
   fruitGrowTime: 10

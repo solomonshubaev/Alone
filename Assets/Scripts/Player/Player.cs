@@ -31,7 +31,7 @@ public class Player : SingletonMonobehaviour<Player>
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     private InformationUiEvent informationUiEvent;
 
-    [SerializeField] public float hunger;
+    [SerializeField] public float vitality;
     [HideInInspector] public float stamina;
 
     protected override void Awake()
@@ -60,14 +60,14 @@ public class Player : SingletonMonobehaviour<Player>
 
     private void Start()
     {
-        this.hunger = this.playerInformation.maxHunger;
+        this.vitality = this.playerInformation.maxVitality;
         this.stamina = this.playerInformation.maxStamina;
     }
 
     private void Update() // will it be critical who will execute first? playerControl or player?
     {
-        this.UpdateHunger();
-        this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxHunger, this.hunger),
+        this.UpdateVitality();
+        this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxVitality, this.vitality),
             HelperUtilities.CalculatePercent(this.playerInformation.maxStamina, this.stamina));
     }
 
@@ -76,14 +76,14 @@ public class Player : SingletonMonobehaviour<Player>
         this.playerDetails = playerDetails;
     }
 
-    private void UpdateHunger()
+    private void UpdateVitality()
     {
-        this.hunger -= Time.deltaTime;
+        this.vitality -= Time.deltaTime;
     }
 
-    public void IncreaseHungerBy(float value)
+    public void IncreaseVitalityBy(float value)
     {
-        this.hunger = Mathf.Clamp(this.hunger + value, 0, this.playerInformation.maxHunger);
+        this.vitality = Mathf.Clamp(this.vitality + value, 0, this.playerInformation.maxVitality);
     }
 
 
