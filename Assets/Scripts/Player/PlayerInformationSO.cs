@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerInformationSO : ScriptableObject
 {
 
-    public int maxHunger = 100;
+    public int maxVitality = 100;
 
     public int maxStamina = 5;
 
@@ -16,9 +16,9 @@ public class PlayerInformationSO : ScriptableObject
 
     private void OnValidate()
     {
-        if (maxHunger < 0)
+        if (maxVitality < 0)
         {
-            Debug.LogWarning("maxHunger Can't be negative"); // TODO: do general method for this.
+            Debug.LogWarning("maxVitality Can't be negative"); // TODO: do general method for this.
         }
         if (maxStamina < 0)
         {

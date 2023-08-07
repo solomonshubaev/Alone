@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FruitBush_", menuName = "Scriptable Objects/Plants/Fruit Bush")]
 public class FruitBushSO : ScriptableObject
 {
-    public int hungerGain = 0;
+    public int vitalityGain = 0;
 
     public float fruitGrowTime = 10f;
 

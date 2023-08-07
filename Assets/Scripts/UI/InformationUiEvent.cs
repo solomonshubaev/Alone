@@ -8,15 +8,15 @@ public class InformationUiEvent : MonoBehaviour
 {
     public event Action<InformationUiEvent, InformationUiArgs> onInformation;
 
-    public void CallUpdatePlayer_InformationUiEvent(float hungerPercent, float staminaPercent)
+    public void CallUpdatePlayer_InformationUiEvent(float vitalityPercent, float staminaPercent)
     {
-        onInformation?.Invoke(this, new InformationUiArgs() { hungerPercent = hungerPercent, staminaPercent = staminaPercent });
+        onInformation?.Invoke(this, new InformationUiArgs() { vitalityPercent = vitalityPercent, staminaPercent = staminaPercent });
     }
 
 }
 
 public class InformationUiArgs : EventArgs
 {
-    public float hungerPercent;
+    public float vitalityPercent;
     public float staminaPercent;
 }
