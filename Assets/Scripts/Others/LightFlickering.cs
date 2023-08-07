@@ -59,15 +59,13 @@ public class LightFlickering : MonoBehaviour
         this.lightManagerAbstract.SetCanAccessLightComponent(false);
         for (int i = 0; i < this.lightFlickeringSO.numberOfFlickersInRow; i++)
         {
-            Debug.Log("Light flicker number: " + i);
             await this.MakeLightFlickerAsync();
             await Task.Delay(TimeSpan.FromSeconds(this.GetNextTimeMaxIntensity()));
         }
-        this.isFlickering = false;
         this.lastTimeFlickered = Time.time;
+        this.isFlickering = false;
         this.timeToNextFlickerProcess = this.GetNextTimeToFlickerProcess();
         this.lightManagerAbstract.SetCanAccessLightComponent(true);
-        Debug.Log("Flicker process finished. Intensity changed back to original.");
     }
 
     private async Task MakeLightFlickerAsync()
@@ -75,11 +73,8 @@ public class LightFlickering : MonoBehaviour
         // maybe add animation - no instance change - need to test
         this.originalIntensity = this.lightToFlicker.intensity;
         this.lightToFlicker.intensity = this.lightFlickeringSO.minLightIntensity;
-        Debug.Log("Changed I to: " + this.lightToFlicker.intensity);
         this.timeBetweenIntensityChange = this.GetNextMinIntensity();
-        Debug.Log("Light in flicker process, Entering to delay");
         await Task.Delay(TimeSpan.FromSeconds(this.timeBetweenIntensityChange));
-        Debug.Log(string.Format("real I = {0}. changed to = {1}",this.lightToFlicker.intensity, this.originalIntensity));
         this.lightToFlicker.intensity = this.originalIntensity;
     }
 
