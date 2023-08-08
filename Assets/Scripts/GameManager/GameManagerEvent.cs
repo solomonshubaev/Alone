@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManagerEvent : MonoBehaviour
 {
     public event Action<GameManagerEvent, GameManagerArgs_UpdateDayTime> updateDayTime;
-    public event Action<GameManagerEvent, GameManagerArgs_PassTime> passTime;
+    public event Action<GameManagerEvent, GameManagerArgs_UpdateDayTime> passTime;
 
     public void UpdateDayTimeEvent(int currentPeriodNumber, int midFullDayPeriodNumber,
         float lightIntensityChangeForPeriod, float maxGeneralLightIntensity)
@@ -23,9 +23,9 @@ public class GameManagerEvent : MonoBehaviour
 
     public void PassTimeEvent(int newPeriodNumber, int midFullDayPeriodNumber, float lightIntensityChangeForPeriod, float maxGeneralLightIntensity)
     {
-        passTime?.Invoke(this, new GameManagerArgs_PassTime()
+        passTime?.Invoke(this, new GameManagerArgs_UpdateDayTime()
         {
-            newPeriodNumber = newPeriodNumber,
+            currentPeriodNumber = newPeriodNumber,
             midFullDayPeriodNumber = midFullDayPeriodNumber,
             lightIntensityChangeForPeriod = lightIntensityChangeForPeriod,
             maxGeneralLightIntensity = maxGeneralLightIntensity
@@ -37,14 +37,6 @@ public class GameManagerEvent : MonoBehaviour
 public class GameManagerArgs_UpdateDayTime : EventArgs
 {
     public int currentPeriodNumber;
-    public int midFullDayPeriodNumber;
-    public float lightIntensityChangeForPeriod;
-    public float maxGeneralLightIntensity;
-}
-
-public class GameManagerArgs_PassTime : EventArgs
-{
-    public int newPeriodNumber;
     public int midFullDayPeriodNumber;
     public float lightIntensityChangeForPeriod;
     public float maxGeneralLightIntensity;
