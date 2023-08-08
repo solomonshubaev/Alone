@@ -6,24 +6,36 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class UiManager : MonoBehaviour
 {
-    [SerializeField] private UiManagerEvent informationUiEvent;
+    [SerializeField] private PlayerInformationEvent playerInfoEvent;
+    [SerializeField] private GameManagerEvent gameManagerEvent;
     [SerializeField] private Image vitalityBar;
     [SerializeField] private Image staminaBar;
+    [SerializeField] private Text survivalDayText;
 
     private void OnEnable()
     {
-        this.informationUiEvent.onInformation += this.InformationUiEvent_UpdateUI;
+        this.playerInfoEvent.updatePlayerInformation += this.PlayerInformationEvent_UpdatePlayerInfo;
+        this.gameManagerEvent.newDay += this.UiManagerEvent_UpdateGameInfo;
     }
 
     private void OnDisable()
     {
-        this.informationUiEvent.onInformation -= this.InformationUiEvent_UpdateUI;
+        this.playerInfoEvent.updatePlayerInformation -= this.PlayerInformationEvent_UpdatePlayerInfo;
+        this.gameManagerEvent.newDay -= this.UiManagerEvent_UpdateGameInfo;
+
     }
 
-    private void InformationUiEvent_UpdateUI(UiManagerEvent informationUiEvent, InformationUiArgs informationUiArgs)
+    private void PlayerInformationEvent_UpdatePlayerInfo(PlayerInformationEvent playerInformationEvent,
+        PlayerInformationArgs playerInformationArgs)
     {
-        this.UpdateVitalityBar(informationUiArgs.vitalityPercent);
-        this.UpdateStaminaBar(informationUiArgs.staminaPercent);
+        this.UpdateVitalityBar(playerInformationArgs.vitalityPercent);
+        this.UpdateStaminaBar(playerInformationArgs.staminaPercent);
+    }
+
+    private void UiManagerEvent_UpdateGameInfo(GameManagerEvent gameManagerEvent,
+        GameManagerArgs_SurvivalDay gameManagerArgs)
+    {
+        this.survivalDayText.text = string.Format("Survival Day: {0}", gameManagerArgs.survivalDay);
     }
 
     private void UpdateVitalityBar(float percent)
@@ -36,9 +48,10 @@ public class UiManager : MonoBehaviour
         this.staminaBar.fillAmount = percent/100f;
     }
 
+
     private void OnValidate()
     {
-        HelperValidations.ValidateNotNull(this.informationUiEvent, "informationUiEvent");
+        HelperValidations.ValidateNotNull(this.playerInfoEvent, "informationUiEvent");
         HelperValidations.ValidateNotNull(this.vitalityBar, "hungerBar");
         HelperValidations.ValidateNotNull(this.staminaBar, "staminaBar");
     }

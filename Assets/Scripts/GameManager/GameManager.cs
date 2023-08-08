@@ -23,6 +23,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private readonly int periodsPerADay = 80;
     #endregion
 
+    private int survivalDay;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,6 +40,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         this.lightIntensityChangeForPeriod = this.maxGeneralLightIntensity / this.midFullDayPeriodNumber;
         this.gameManagerEvent.UpdateDayTimeEvent(this.currentPeriodNumber, this.midFullDayPeriodNumber,
                 this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
+        this.survivalDay = 1;
+        this.gameManagerEvent.NewDay(this.survivalDay);
     }
 
 
@@ -64,7 +68,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         int newPeriodNumber = this.currentPeriodNumber + periodToPass;
         if (newPeriodNumber > this.periodsPerADay)
-            this.currentPeriodNumber = newPeriodNumber % this.periodsPerADay;
+            this.SetNewDay(newPeriodNumber % this.periodsPerADay);
         else
             this.currentPeriodNumber = newPeriodNumber;
         Debug.Log("New period number is: " + this.currentPeriodNumber);
@@ -87,9 +91,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
 
-    private void SetNewDay()
+    private void SetNewDay(int periodInDay = 1)
     {
-        this.currentPeriodNumber = 1;
+        Debug.Log("New survival day");
+        this.currentPeriodNumber = periodInDay;
+        this.survivalDay++;
+        this.gameManagerEvent.NewDay(this.survivalDay);
     }
 
     #region VALIDATION

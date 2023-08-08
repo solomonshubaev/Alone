@@ -17,7 +17,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementByVelocity))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(PlayerControl))]
-[RequireComponent(typeof(UiManagerEvent))]
+[RequireComponent(typeof(PlayerInformationEvent))]
 #endregion
 public class Player : SingletonMonobehaviour<Player>
 {
@@ -29,7 +29,7 @@ public class Player : SingletonMonobehaviour<Player>
     [HideInInspector] public Animator animator;
     [HideInInspector] public IdleEvent idleEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
-    private UiManagerEvent informationUiEvent;
+    private PlayerInformationEvent informationUiEvent;
 
     [SerializeField] public float vitality;
     [HideInInspector] public float stamina;
@@ -41,7 +41,7 @@ public class Player : SingletonMonobehaviour<Player>
         this.animator = GetComponent<Animator>();
         this.idleEvent = GetComponent<IdleEvent>();
         this.movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
-        this.informationUiEvent = GetComponent<UiManagerEvent>();
+        this.informationUiEvent = GetComponent<PlayerInformationEvent>();
         this.interactionCollidersParent = transform.Find("InteractionColliders");
         this.currentInteractionDirection = LookDirection.Down;
         this.SetInteractionDirectionActive(this.currentInteractionDirection);
@@ -67,7 +67,7 @@ public class Player : SingletonMonobehaviour<Player>
     private void Update() // will it be critical who will execute first? playerControl or player?
     {
         this.UpdateVitality();
-        this.informationUiEvent.CallUpdatePlayer_InformationUiEvent(HelperUtilities.CalculatePercent(this.playerInformation.maxVitality, this.vitality),
+        this.informationUiEvent.UpdatePlayerInformation(HelperUtilities.CalculatePercent(this.playerInformation.maxVitality, this.vitality),
             HelperUtilities.CalculatePercent(this.playerInformation.maxStamina, this.stamina));
     }
 
