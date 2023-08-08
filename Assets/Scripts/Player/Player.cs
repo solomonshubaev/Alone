@@ -17,7 +17,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementByVelocity))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(PlayerControl))]
-[RequireComponent(typeof(InformationUiEvent))]
+[RequireComponent(typeof(UiManagerEvent))]
 #endregion
 public class Player : SingletonMonobehaviour<Player>
 {
@@ -29,7 +29,7 @@ public class Player : SingletonMonobehaviour<Player>
     [HideInInspector] public Animator animator;
     [HideInInspector] public IdleEvent idleEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
-    private InformationUiEvent informationUiEvent;
+    private UiManagerEvent informationUiEvent;
 
     [SerializeField] public float vitality;
     [HideInInspector] public float stamina;
@@ -41,7 +41,7 @@ public class Player : SingletonMonobehaviour<Player>
         this.animator = GetComponent<Animator>();
         this.idleEvent = GetComponent<IdleEvent>();
         this.movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
-        this.informationUiEvent = GetComponent<InformationUiEvent>();
+        this.informationUiEvent = GetComponent<UiManagerEvent>();
         this.interactionCollidersParent = transform.Find("InteractionColliders");
         this.currentInteractionDirection = LookDirection.Down;
         this.SetInteractionDirectionActive(this.currentInteractionDirection);

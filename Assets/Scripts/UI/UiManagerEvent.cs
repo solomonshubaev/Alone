@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class InformationUiEvent : MonoBehaviour
+public class UiManagerEvent : MonoBehaviour
 {
-    public event Action<InformationUiEvent, InformationUiArgs> onInformation;
+    public event Action<UiManagerEvent, InformationUiArgs> onInformation;
 
     public void CallUpdatePlayer_InformationUiEvent(float vitalityPercent, float staminaPercent)
     {
