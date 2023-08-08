@@ -69,7 +69,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             this.currentPeriodNumber = newPeriodNumber;
         Debug.Log("New period number is: " + this.currentPeriodNumber);
         this.lastTimeAPeriodStarted = Time.time;
-        this.gameManagerEvent.PassTimeEvent(newPeriodNumber, this.midFullDayPeriodNumber, this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
+        this.gameManagerEvent.UpdateDayTimeEvent(newPeriodNumber, this.midFullDayPeriodNumber, this.lightIntensityChangeForPeriod, this.maxGeneralLightIntensity);
     }
 
     private void UpdateDayNightCycle()

@@ -24,52 +24,35 @@ public class GeneralLightLogic : MonoBehaviour
     private void OnEnable()
     {
         this.gameManagerEvent.updateDayTime += GameManagerEvent_ConfigGeneralLight;
-        this.gameManagerEvent.passTime += GameManagerEvent_ChangeGeneralLightWhenTimePass;
     }
 
     private void OnDisable()
     {
         this.gameManagerEvent.updateDayTime -= GameManagerEvent_ConfigGeneralLight;
-        this.gameManagerEvent.passTime -= GameManagerEvent_ChangeGeneralLightWhenTimePass;
     }
 
     private void GameManagerEvent_ConfigGeneralLight(GameManagerEvent gameManagerEvent,
         GameManagerArgs_UpdateDayTime gameManagerArgs)
     {
-        if (gameManagerArgs.currentPeriodNumber <= gameManagerArgs.midFullDayPeriodNumber)
-        {
-            this.generalLight.intensity -= gameManagerArgs.lightIntensityChangeForPeriod;
-        }
-        else
-        {
-            this.generalLight.intensity += gameManagerArgs.lightIntensityChangeForPeriod;
-        }
+
+        this.generalLight.intensity = this.CalculateNewLightIntensity(gameManagerArgs.currentPeriodNumber,
+            gameManagerArgs.lightIntensityChangeForPeriod, gameManagerArgs.midFullDayPeriodNumber);
         this.ValidateLightIntensityRealTime(gameManagerArgs.maxGeneralLightIntensity);
         this.generalLightEvent.UpdateLightIntensityEvent(this.generalLight.intensity);
     }
 
-    private void GameManagerEvent_ChangeGeneralLightWhenTimePass(GameManagerEvent gameManagerEvent,
-        GameManagerArgs_PassTime gameManagerArgs)
-    {
-        this.generalLight.intensity = this.CalculateNewLightIntensity(
-            gameManagerArgs.newPeriodNumber, gameManagerArgs.lightIntensityChangeForPeriod,
-            gameManagerArgs.midFullDayPeriodNumber);
-        this.ValidateLightIntensityRealTime(gameManagerArgs.maxGeneralLightIntensity);
-        this.generalLightEvent.UpdateLightIntensityEvent(this.generalLight.intensity);
-    }
-
-    private float CalculateNewLightIntensity(int newPeriod, float lightIntensityChangeForPeriod,
+    private float CalculateNewLightIntensity(int period, float lightIntensityChangeForPeriod,
         int midFullDayPeriodNumber)
     {
-        if (newPeriod <= midFullDayPeriodNumber)
+        if (period <= midFullDayPeriodNumber)
         {
             // if maximum light intensity is 1 !!!
-            return 1 - ((newPeriod - 1) * lightIntensityChangeForPeriod);
+            return 1 - ((period - 1) * lightIntensityChangeForPeriod);
         }
         else
         {
             // if maximum light intensity is 1 !!!
-            return (newPeriod * lightIntensityChangeForPeriod) - 1;
+            return (period * lightIntensityChangeForPeriod) - 1;
         }
     }
 
