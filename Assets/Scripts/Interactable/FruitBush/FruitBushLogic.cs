@@ -6,13 +6,13 @@ using UnityEngine;
 public class FruitBushLogic : InteractableAbstract
 {
     [SerializeField] private FruitBushSO fruitBushSO;
-    [SerializeField] private bool hasFruits;
-    [SerializeField] private GameObject fruitGameObject;
+    [SerializeField] protected bool hasFruits;
+    private GameObject[] fruitGameObjects;
     private float lastTimeHadFruits;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        
+        this.InitFruitArray();
     }
 
     void Start()
@@ -23,29 +23,59 @@ public class FruitBushLogic : InteractableAbstract
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        if (!this.hasFruits && Time.time >= this.lastTimeHadFruits + this.fruitBushSO.fruitGrowTime)
-        {
-            this.hasFruits = true;
-            this.fruitGameObject.SetActive(true);
-        }
+        this.GrowFruits();
     }
 
     public override void InteractWithPlayer()
     {
         if (this.hasFruits)
         {
-            this.hasFruits = false;
             this.lastTimeHadFruits = Time.time;
-            this.fruitGameObject.SetActive(false);
-            Player.Instance.IncreaseVitalityBy((float)this.fruitBushSO.vitalityGain);
+            this.SetFruitsActive(false);
+            Player.Instance.IncreaseVitalityBy((float)this.fruitBushSO.vitalityGainPerFruit * this.fruitGameObjects.Length);
         }
+    }
+
+    protected void GrowFruits()
+    {
+        if (!this.hasFruits && Time.time >= this.lastTimeHadFruits + this.fruitBushSO.fruitGrowTime)
+        {
+            this.SetFruitsActive(true);
+        }
+    }
+
+    private void InitFruitArray()
+    {
+        List<GameObject> fruitGameObjects = new List<GameObject>();
+        foreach (Transform child in this.transform)
+        {
+            if (child.tag == TagsEnum.Fruit.ToString())
+            {
+                fruitGameObjects.Add(child.gameObject);
+            }
+        }
+        int numberOfFruits = Random.Range(1, fruitGameObjects.Count);
+        this.fruitGameObjects = new GameObject[numberOfFruits];
+        for (int i = 0; i < this.fruitGameObjects.Length; i++)
+        {
+            fruitGameObjects[i].SetActive(true); // activate at beginning
+            this.fruitGameObjects[i] = fruitGameObjects[i];
+        }
+    }
+
+    protected void SetFruitsActive(bool active)
+    {
+        foreach (GameObject fruit in this.fruitGameObjects)
+        {
+            fruit.SetActive(active);
+        }
+        this.hasFruits = active;
     }
 
     private void OnValidate()
     {
-        HelperValidations.ValidateNotNull(this.fruitGameObject, nameof(this.fruitGameObject));
         if (this.transform.tag != TagsEnum.Interactable.ToString())
         {
             Debug.LogWarning(string.Format("GameObject should be with tag: '{0}'",

@@ -64,6 +64,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         
     }
 
+    public bool IsDark()
+    {
+        int startOfSunset = this.midFullDayPeriodNumber - (this.midFullDayPeriodNumber / 2);
+        int endOfDawn = this.midFullDayPeriodNumber + (this.midFullDayPeriodNumber / 2);
+        return startOfSunset < this.currentPeriodNumber && this.currentPeriodNumber < endOfDawn;
+    }
+
     private void PassTimeToPeriod(int periodToPass)
     {
         int newPeriodNumber = this.currentPeriodNumber + periodToPass;

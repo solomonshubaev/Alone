@@ -26,6 +26,10 @@ public class CollideWithPlayer : MonoBehaviour
         HelperValidations.ValidateNotNull(this.parentTransform, nameof(this.parentTransform));
         this.sortingGroup = this.parentTransform.GetComponent<SortingGroup>();
         HelperValidations.ValidateNotNull(this.sortingGroup, nameof(this.sortingGroup));
+    }
+
+    private void Start()
+    {
         this.spriteRenderers = this.parentTransform.GetComponentsInChildren<SpriteRenderer>();
     }
 
@@ -40,7 +44,8 @@ public class CollideWithPlayer : MonoBehaviour
             {
                 foreach(SpriteRenderer spriteRenderer in this.spriteRenderers)
                 {
-                    spriteRenderer.color = new Color(1f, 1f, 1f, this.spriteAlpha / 255f);
+                    spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b,
+                        this.spriteAlpha / 255f);
                 }
             }
         }
@@ -57,7 +62,7 @@ public class CollideWithPlayer : MonoBehaviour
             {
                 foreach (SpriteRenderer spriteRenderer in this.spriteRenderers)
                 {
-                    spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+                    spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
                 }
             }
         }

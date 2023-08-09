@@ -12,7 +12,7 @@ public class PlayerSpotLight : LightManagerAbstract
     [SerializeField] private GeneralLightEvent generalLightEvent;
 
     private readonly float maxPlayerLightIntensity = 0.8f;
-    private readonly float lightActivateThreshold = 0.4f;
+    private readonly float lightActivateThreshold = 0.5f;
 
     private void Awake()
     {
