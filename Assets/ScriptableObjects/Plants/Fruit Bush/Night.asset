@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d738352e7d7ab4245a8407fda50f40a5, type: 3}
-  m_Name: Poisoned
+  m_Name: Night
   m_EditorClassIdentifier: 
-  vitalityGainPerFruit: -5
+  vitalityGainPerFruit: 6
   fruitGrowTime: 10

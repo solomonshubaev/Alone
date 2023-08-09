@@ -2,7 +2,8 @@ public enum TagsEnum
 {
     Transparent,
     Player,
-    Interactable
+    Interactable,
+    Fruit
 }
 
 public enum SortingLayerEnum

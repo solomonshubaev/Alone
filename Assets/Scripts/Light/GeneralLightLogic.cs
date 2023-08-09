@@ -12,13 +12,14 @@ public class GeneralLightLogic : MonoBehaviour
 {
     private Light2D generalLight;
     private GeneralLightEvent generalLightEvent;
-    [SerializeField] private GameManagerEvent gameManagerEvent;
+    private GameManagerEvent gameManagerEvent;
 
 
     private void Awake()
     {
         this.generalLight = GetComponent<Light2D>();
         this.generalLightEvent = GetComponent<GeneralLightEvent>();
+        this.gameManagerEvent = this.transform.parent.GetComponent<GameManagerEvent>();
     }
 
     private void OnEnable()
