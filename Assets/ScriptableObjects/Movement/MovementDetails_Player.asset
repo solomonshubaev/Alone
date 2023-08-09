@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7cf812b082ba2f45beacbedf2c7b5ea, type: 3}
   m_Name: MovementDetails_Player
   m_EditorClassIdentifier: 
-  walkingSpeed: 3
-  runningSpeed: 5
+  walkingSpeed: 4
+  runningSpeed: 6
