@@ -68,4 +68,15 @@ public class HelperUtilitiesTest
         Assert.AreEqual(LookDirection.Down, HelperUtilities.GetLookDirection(vector));
     }
     #endregion
+
+    #region GetSortingOrderByPosition
+    [Test]
+    public void GetSortingOrderByPosition_Success()
+    {
+        Vector2 position1 = new Vector2(1.3f, 4.556f); // infront -> bigger sorting order number
+        Vector2 position2 = new Vector2(1.3f, 4.576f); // behind
+        Assert.Greater(HelperUtilities.GetSortingOrderByPosition(position1),
+            HelperUtilities.GetSortingOrderByPosition(position2));
+    }
+    #endregion
 }

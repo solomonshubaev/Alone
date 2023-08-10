@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Transparent
   - FruitBush
   - Interactable
   - Fruit
+  - Transparent
+  - PlayerCamera
   layers:
   - Default
   - TransparentFX

@@ -57,4 +57,9 @@ public class HelperUtilities
 
         return null;
     }
+
+    public static int GetSortingOrderByPosition(Vector2 position)
+    {
+        return (int)(position.y * 1000 * -1);
+    }
 }

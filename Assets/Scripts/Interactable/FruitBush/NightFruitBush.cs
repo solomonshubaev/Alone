@@ -8,7 +8,6 @@ public class NightFruitBush : FruitBushLogic
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("Set fruits of: " + this.transform.name);
         this.SetFruitsActive(false);
     }
 
