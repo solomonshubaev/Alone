@@ -52,7 +52,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // for testing, will be removed
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            this.PassTimeToPeriod(10); // test only
+            this.PassTimeToPeriod(this.periodsPerADay / 4); // test only
         }
 
         // for testing, will be removed

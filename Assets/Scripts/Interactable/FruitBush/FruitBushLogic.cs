@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(SortingGroup))]
 public class FruitBushLogic : InteractableAbstract
 {
     [SerializeField] private FruitBushSO fruitBushSO;
     [SerializeField] protected bool hasFruits;
+    private SortingGroup sortingGroup;
     private GameObject[] fruitGameObjects;
     private float lastTimeHadFruits;
 
     protected virtual void Awake()
     {
         this.InitFruitArray();
+        this.sortingGroup = GetComponent<SortingGroup>();
     }
 
     void Start()
@@ -21,6 +25,7 @@ public class FruitBushLogic : InteractableAbstract
         {
             this.lastTimeHadFruits = Time.time;
         }
+        this.sortingGroup.sortingOrder = HelperUtilities.GetSortingOrderByPosition(this.transform.position);
     }
 
     protected virtual void Update()

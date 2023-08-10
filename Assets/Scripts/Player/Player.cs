@@ -33,6 +33,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     [SerializeField] public float vitality;
     [HideInInspector] public float stamina;
+    [HideInInspector] public Camera playerCamera;
 
     protected override void Awake()
     {
@@ -45,6 +46,7 @@ public class Player : SingletonMonobehaviour<Player>
         this.interactionCollidersParent = transform.Find("InteractionColliders");
         this.currentInteractionDirection = LookDirection.Down;
         this.SetInteractionDirectionActive(this.currentInteractionDirection);
+        this.SetPlayerCamera();
     }
 
     private void OnEnable()
@@ -79,6 +81,7 @@ public class Player : SingletonMonobehaviour<Player>
     private void UpdateVitality()
     {
         this.vitality -= Time.deltaTime;
+        this.vitality = this.vitality < 0 ? 0 : this.vitality;
     }
 
     public void IncreaseVitalityBy(float value)
@@ -111,5 +114,22 @@ public class Player : SingletonMonobehaviour<Player>
     private bool WasLookingDirectionChanged(LookDirection newLookDirection)
     {
         return this.currentInteractionDirection != newLookDirection;
+    }
+
+    private void SetPlayerCamera()
+    {
+        foreach (Transform child in this.transform)
+        {
+            if (child.tag == TagsEnum.PlayerCamera.ToString())
+            {
+                this.playerCamera = child.GetComponent<Camera>();
+                return;
+            }
+        }
+    }
+
+    public float DistanceFromPlayer(Vector2 objectPosition)
+    {
+        return Vector2.Distance(this.transform.position, objectPosition);
     }
 }

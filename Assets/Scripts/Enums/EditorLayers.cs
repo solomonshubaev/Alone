@@ -1,9 +1,9 @@
 public enum TagsEnum
 {
-    Transparent,
     Player,
     Interactable,
-    Fruit
+    Fruit,
+    PlayerCamera
 }
 
 public enum SortingLayerEnum
